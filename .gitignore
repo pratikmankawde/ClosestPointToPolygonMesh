@@ -1,2 +1,6 @@
 /.project
+/.cproject
+/.settings/
 /build/
+/thirdparty/
+/src/docs/

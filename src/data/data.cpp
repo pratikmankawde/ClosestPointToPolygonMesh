@@ -2,18 +2,17 @@
  * Author: pratik
  */
 
-#include <data/geometry.h>
+#include <data/data.h>
 
 namespace data {
 
-Geometry::Geometry()
-		: Data()
+Data::Data()
 {
 	// TODO Auto-generated constructor stub
 
 }
 
-Geometry::~Geometry()
+Data::~Data()
 {
 	// TODO Auto-generated destructor stub
 }
