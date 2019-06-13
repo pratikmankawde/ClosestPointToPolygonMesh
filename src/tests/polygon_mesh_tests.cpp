@@ -1,5 +1,5 @@
 /*
- * Author: pratik
+ * Author: Pratik Mankawde
  */
 
 #include <gtest/gtest.h>
@@ -31,17 +31,23 @@ class PolygonMeshTests : public ::testing::Test {
 };
 
 
-TEST_F(PolygonMeshTests, CheckClosestPoint) {
-	std::shared_ptr<PolygonMesh> pm  = PolygonMesh::create();
-//	const std::vector<Vec3> vertices = { Vec3(0.0f, 0.0f, 0.0f),
-//										 Vec3(1.0f, 0.0f, 0.0f),
-//										 Vec3(1.0f, 1.0f, 0.0f),
-//										 Vec3(0.0f, 1.0f, 0.0f) };
-//	const std::vector<Vec3ui> topology = { Vec3ui(0, 1, 2), Vec3ui(0, 2, 3) };
-//	pm->build_mesh(vertices, topology);
-//	const Location loc = pm->closest_point(Vec3(0.5f, 0.5f, 0.5f));
-//	const Vec3 pos = pm->get_spacial_position(loc);
-//	ASSERT_EQ(pos, Vec3(0.5f, 0.5f, 0.0f));
+TEST_F(PolygonMeshTests, ClosestPointInFrontOfPlane) {
+	const Location& loc = pm->closest_point(Vec3(0.5f, 0.5f, 0.5f));
+	const Vec3 pos = pm->get_spacial_position(loc);
+	ASSERT_EQ(pos, Vec3(0.5f, 0.5f, 0.0f));
 }
+
+TEST_F(PolygonMeshTests, ClosestPointAtTheTopRightCorner) {
+	const Location& loc = pm->closest_point(Vec3(3.5f, 3.5f, 3.5f));
+	const Vec3 pos = pm->get_spacial_position(loc);
+	ASSERT_EQ(pos, Vec3(1.0f, 1.0f, 0.0f));
+}
+
+TEST_F(PolygonMeshTests, ClosestPointOnTheTopEdge) {
+	const Location& loc = pm->closest_point(Vec3(0.0f, 2.0f, 0.0f));
+	const Vec3 pos = pm->get_spacial_position(loc);
+	ASSERT_EQ(pos, Vec3(0.0f, 1.0f, 0.0f));
+}
+
 
 }

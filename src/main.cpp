@@ -1,3 +1,4 @@
+
 #include <iostream>
 using namespace std;
 
@@ -16,10 +17,11 @@ int main(int argc, char **argv) {
 
 	const std::vector<Vec3ui> topology = { Vec3ui(0, 1, 2), Vec3ui(0, 2, 3) };
 
-	pm->build_mesh(vertices, topology);
-
+	bool status = pm->build_mesh(vertices, topology);
+	if (!status) {
+		return 0;
+	}
 	const Location loc = pm->closest_point(Vec3(0.5f, 0.5f, 0.5f));
-	const Vec3 pos = pm->get_spacial_position(loc);
-	cout<<"position: "<<pos;
+	cout<<"Location: "<<loc;
 	return 0;
 }

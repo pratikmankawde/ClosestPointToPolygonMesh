@@ -2,16 +2,16 @@ cmake_minimum_required(VERSION 3.10.2)
  
 enable_testing()
  
-configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
+configure_file(CMakeLists.txt.in ${CMAKE_BINARY_DIR}/googletest-download/CMakeLists.txt)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
   RESULT_VARIABLE result
-  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
 if(result)
   message(FATAL_ERROR "CMake step for googletest failed: ${result}")
 endif()
 execute_process(COMMAND ${CMAKE_COMMAND} --build .
   RESULT_VARIABLE result
-  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
 if(result)
   message(FATAL_ERROR "Build step for googletest failed: ${result}")
 endif()
@@ -22,8 +22,8 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 # Add googletest directly to our build. This defines
 # the gtest and gtest_main targets.
-add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
-                 ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
+add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src
+                 ${CMAKE_BINARY_DIR}/googletest-build
                  EXCLUDE_FROM_ALL)
 
 # The gtest/gtest_main targets carry header search path
@@ -40,18 +40,19 @@ file(GLOB TESTSOURCES "*.cpp")
 add_executable(ClosestPointTests ${TESTSOURCES})
 
 target_include_directories(ClosestPointTests PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_HOME_DIRECTORY}/include>
+  $<BUILD_INTERFACE:${CMAKE_HOME_DIRECTORY}/src/include>
   $<INSTALL_INTERFACE:include> 
 )
 
 
 target_link_libraries(ClosestPointTests
+ClosestPointLib
 gtest_main
- pthread)
+pthread)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
-install(TARGETS ClosestPointTests DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/bin)
+install(TARGETS ClosestPointTests DESTINATION ${CMAKE_BINARY_DIR}/bin)
 
 # now register the executable with CTest
-#add_test(NAME Tests COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bin/ClosestPointTests)
+#add_test(NAME Tests COMMAND ${CMAKE_BINARY_DIR}/bin/ClosestPointTests)
