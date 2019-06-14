@@ -16,20 +16,20 @@ class PolygonMeshTests : public ::testing::Test {
 		virtual void SetUp() override {
 			pm = PolygonMesh::create();
 			const std::vector<Vec3> vertices = { Vec3(0.0f, 0.0f, 0.0f),
-												 Vec3(1.0f, 0.0f, 0.0f),
-												 Vec3(1.0f, 1.0f, 0.0f),
-												 Vec3(0.0f, 1.0f, 0.0f) };
-			const std::vector<PolygonMesh::Polygon> topology = { PolygonMesh::Polygon(0, 1, 2), PolygonMesh::Polygon(0, 2, 3) };
-			pm->build_mesh(vertices, topology);
+													Vec3(1.0f, 0.0f, 0.0f),
+													Vec3(1.0f, 1.0f, 0.0f),
+													Vec3(0.0f, 1.0f, 0.0f) };
+			const std::vector<PolygonMesh::Polygon> topology = { PolygonMesh::Polygon(0, 1, 2),
+																	PolygonMesh::Polygon(0, 2, 3) };
+			bool status = pm->build_mesh(vertices, topology);
 		}
 
 		virtual void TearDown() override {
 			// Code here will be called immediately after each test
 			// (right before the destructor).
 		}
-		std::shared_ptr<PolygonMesh> pm ;
+		std::shared_ptr<PolygonMesh> pm;
 };
-
 
 TEST_F(PolygonMeshTests, ClosestPointInFrontOfPlane) {
 	const Location& loc = pm->closest_point(Vec3(0.5f, 0.5f, 0.5f));
@@ -48,6 +48,5 @@ TEST_F(PolygonMeshTests, ClosestPointOnTheTopEdge) {
 	const Vec3 pos = pm->get_spacial_position(loc);
 	ASSERT_EQ(pos, Vec3(0.0f, 1.0f, 0.0f));
 }
-
 
 }

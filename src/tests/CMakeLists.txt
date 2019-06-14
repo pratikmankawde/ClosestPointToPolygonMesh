@@ -53,6 +53,3 @@ pthread)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
 install(TARGETS ClosestPointTests DESTINATION ${CMAKE_BINARY_DIR}/bin)
-
-# now register the executable with CTest
-#add_test(NAME Tests COMMAND ${CMAKE_BINARY_DIR}/bin/ClosestPointTests)

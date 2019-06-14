@@ -22,7 +22,8 @@ class CacheData : public Data {
 		 */
 		CacheData(std::shared_ptr<const Data> a_data)
 				: 	Data(),
-					m_data(a_data) {};
+					m_data(a_data) {
+		};
 
 		~CacheData() = default;
 

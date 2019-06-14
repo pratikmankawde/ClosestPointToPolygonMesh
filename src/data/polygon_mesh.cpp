@@ -37,10 +37,16 @@ Location PolygonMesh::closest_point(const Vec3& a_query_point) const {
 	 * - Check each one of them for the closest projected point on them.
 	 * - Return the closest point as spacial location or return invalid location if not found.
 	 */
+
+	if (m_vertices.size() < 3) {
+		return INVALID_LOCATION;
+	}
+
 	std::vector<PolygonIndexPair> nearest_polygons;
 	nearest_polygons.reserve(CLOSEST_TRIANGLE_COUNT);
 
-	const std::unique_ptr<SpacialQueryCacheData>& cached_data = m_spacial_query_cache->get_cached_data(shared_from_this());
+	const std::unique_ptr<SpacialQueryCacheData>& cached_data =
+			m_spacial_query_cache->get_cached_data(shared_from_this());
 	const std::unique_ptr<SpacialQueryCacheData::SpacialCachePolygonTree>& tree = cached_data->get_polygon_tree();
 
 	// We query for 16 polygons closest to our query point and then we check each of them individually
@@ -53,7 +59,7 @@ Location PolygonMesh::closest_point(const Vec3& a_query_point) const {
 	std::vector<Vec3> barycentric_coords_vec;
 	barycentric_coords_vec.resize(CLOSEST_TRIANGLE_COUNT);
 
-	tbb::parallel_for(std::size_t{0}, CLOSEST_TRIANGLE_COUNT, [&](std::size_t index) {
+	tbb::parallel_for(std::size_t { 0 }, CLOSEST_TRIANGLE_COUNT, [&](std::size_t index) {
 		PolygonIndexPair& polygon_index_pair = nearest_polygons[index];
 		const Polygon& polygon = m_topology[polygon_index_pair.second];
 		const Vec3& vertex1 = m_vertices[polygon[0]];
@@ -64,8 +70,8 @@ Location PolygonMesh::closest_point(const Vec3& a_query_point) const {
 		// if it's not we will triangulate it here by triangle-fan technique and evaluate each triangle.
 		const Vec3 barycentric_coords = data::get_closest_point_on_triangle(vertex1, vertex2, vertex3, a_query_point);
 		const Vec3 projected_point = Vec3(vertex1 * barycentric_coords.x()
-									+ vertex2 * barycentric_coords.y()
-									+ vertex3 * barycentric_coords.z());
+				+ vertex2 * barycentric_coords.y()
+				+ vertex3 * barycentric_coords.z());
 		squared_distances[index] = (projected_point - a_query_point).squaredNorm();
 		barycentric_coords_vec[index] = barycentric_coords;
 	});
@@ -106,7 +112,7 @@ void PolygonMesh::SpacialQueryCacheData::compute() {
 	const std::shared_ptr<const PolygonMesh> polymesh_data = std::dynamic_pointer_cast<const PolygonMesh>(m_data);
 	poly_index_pair.resize(polymesh_data->get_polygon_count());
 
-	tbb::parallel_for(std::size_t{0}, polymesh_data->get_polygon_count(), [&](std::size_t index) {
+	tbb::parallel_for(std::size_t { 0 }, polymesh_data->get_polygon_count(), [&](std::size_t index) {
 		const Polygon& vertex_indices = polymesh_data->get_polygon_at(index);
 		BoundingVolume bounding_volume;
 		// We create a bounding volume for the polygon
@@ -118,7 +124,8 @@ void PolygonMesh::SpacialQueryCacheData::compute() {
 		poly_index_pair[index] = std::make_pair(bounding_volume, index);
 	});
 	// We initialize r-tree with all the data at once. This will initialize tree with packing algo.
-	m_polygon_tree = std::unique_ptr<SpacialCachePolygonTree>(new SpacialCachePolygonTree(poly_index_pair.begin(), poly_index_pair.end()));
+	m_polygon_tree = std::unique_ptr<SpacialCachePolygonTree>(new SpacialCachePolygonTree(	poly_index_pair.begin(),
+																							poly_index_pair.end()));
 }
 } /* namespace data */
 

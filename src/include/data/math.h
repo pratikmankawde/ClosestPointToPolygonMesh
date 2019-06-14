@@ -6,7 +6,6 @@
 #include <cassert>
 #include <functional>
 
-
 /**
  * Function to clamp value between high and low
  * Taken from std::c++17 https://en.cppreference.com/w/cpp/algorithm/clamp

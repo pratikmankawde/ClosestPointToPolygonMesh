@@ -33,7 +33,7 @@ struct Location {
 /**
  * Const to represent an invalid location
  */
-static const Location INVALID_LOCATION { Vec3ui(), 0, Vec3(), false};
+static const Location INVALID_LOCATION { Vec3ui(), 0, Vec3(), false };
 
 /**
  * This function tries to project a point on a triangle plane and
@@ -148,10 +148,12 @@ inline Vec3 get_closest_point_on_triangle(const Vec3& a_vertex1,
  * @return
  */
 inline std::ostream& operator<<(std::ostream& os, const Location& location) {
-    os << "Spacial Location:\nVertex Indices: ["<< location.vertex_indices.transpose()
-    		<<"]\nBarycentric: [" << location.barycentric_coords.transpose()
-			<< "]\nPolygon Index: [" << location.polygon_index<<"]";
-    return os;
+	os << "Spacial Location:\nVertex Indices: [" << location.vertex_indices.transpose()
+		<< "]\nBarycentric: ["
+		<< location.barycentric_coords.transpose()
+		<< "]\nPolygon Index: ["
+		<< location.polygon_index << "]";
+	return os;
 }
 } /* namespace data */
 

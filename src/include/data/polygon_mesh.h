@@ -112,8 +112,9 @@ class PolygonMesh : public Geometry, public std::enable_shared_from_this<Polygon
 		 * making sure we have a shared_pre alive and enable_shared_from_this would work
 		 */
 		PolygonMesh()
-					: Geometry()
-					, m_spacial_query_cache(std::make_shared<Cache<SpacialQueryCacheData>>()) {};
+				: 	Geometry()
+				,	m_spacial_query_cache(std::make_shared<Cache<SpacialQueryCacheData>>()) {
+		};
 
 		/**
 		 * We are assuming mesh is triangle based, hence we will have only 3 vertices defining a polygon.
@@ -134,8 +135,8 @@ class PolygonMesh : public Geometry, public std::enable_shared_from_this<Polygon
 		class SpacialQueryCacheData : CacheData {
 			public:
 				SpacialQueryCacheData(std::shared_ptr<const Data> a_data)
-									: 	CacheData(a_data),
-										m_polygon_tree(nullptr) {
+						: 	CacheData(a_data),
+							m_polygon_tree(nullptr) {
 				}
 				/**
 				 * Aliasing for readability.
