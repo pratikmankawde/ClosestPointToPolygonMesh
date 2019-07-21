@@ -76,7 +76,7 @@ inline Vec3 get_barycentric_coords(const Vec3& a_vertex1,
  * hence this is the closest point on triangle to the query point.
  * Else projected point is outside the triangle and hence closest point can be on an edge or on one of the vertex.
  * Let's say our triangle has vertices [a, b, c], if let's say BC.x is negative,
- * it would mean projected point it beyond the edge opposite to first vertex(a) of triangle.
+ * it would mean projected point is beyond the edge opposite to first vertex(a) of triangle.
  * Hence closest projected point can be either on edge b-c or on b or c.
  * We re-project(RP) the projected point(PP) on to the edge b-c and then find ratio of it's distance from b and c.
  * This would give us good estimate of where the closest point lies. If the latest projected point(RP) is not between
@@ -86,7 +86,7 @@ inline Vec3 get_barycentric_coords(const Vec3& a_vertex1,
  * @param a_vertex2 2st vertex of triangle
  * @param a_vertex3 3st vertex of triangle
  * @param a_query_point point for which closest point is to be calculated
- * @return Closest point to query_point on the triangle
+ * @return Barycentric coord of closest point to query_point on the triangle
  */
 inline Vec3 get_closest_point_on_triangle(const Vec3& a_vertex1,
 											const Vec3& a_vertex2,
