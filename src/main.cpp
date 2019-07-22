@@ -1,10 +1,10 @@
 #include <iostream>
-using namespace std;
+#include <memory>
 
 #include <data/polygon_mesh.h>
 #include <types.h>
-#include <memory>
 
+using namespace std;
 using namespace data;
 
 int main(int argc, char **argv) {

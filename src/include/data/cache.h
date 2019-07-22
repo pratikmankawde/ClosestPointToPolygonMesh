@@ -4,6 +4,7 @@
 #pragma once
 
 #include <memory>
+
 #include <data/data.h>
 #include <types.h>
 

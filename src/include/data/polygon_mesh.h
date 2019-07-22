@@ -4,15 +4,15 @@
 #pragma once
 
 #include <cmath>
-#include <vector>
-#include <math.h>
 #include <memory>
+#include <vector>
 
 #include <boost/geometry/index/rtree.hpp>
 
 #include <data/cache.h>
 #include <data/geometry.h>
 #include <data/spacial.h>
+#include <math.h>
 #include <types.h>
 
 using namespace boost::geometry;

@@ -2,6 +2,7 @@
  * Author: Pratik Mankawde
  */
 #include <memory>
+
 #include <boost/geometry.hpp>
 #include <boost/geometry/algorithms/detail/envelope/interface.hpp>
 #include <tbb/parallel_for.h>
@@ -18,7 +19,7 @@ namespace data {
 bool PolygonMesh::build_mesh(const std::vector<Vec3>& a_vertex_locations, const std::vector<Polygon>& a_topology) {
 
 	// Ideally we should check each polygon for various factors, like Delaunay triangulation etc,
-	// depending on the use case, once verified can we can save them
+	// depending on the use case, once verified we can save them
 	if (a_vertex_locations.size() < 3 || a_topology.size() < 1) {
 		return false;
 	}
